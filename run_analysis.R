@@ -1,3 +1,5 @@
+#loading dplyr package
+library(dplyr)
 #reading both datasets
 traindata <- read.table("./UCI HAR Dataset/train/X_train.txt") 
 testdata <- read.table("./UCI HAR Dataset/test/X_test.txt")
@@ -13,7 +15,7 @@ activitylabels <- read.table("./UCI HAR Dataset/activity_labels.txt")
 #reading activity ids
 trainactivity <- read.table("./UCI HAR Dataset/train/y_train.txt")
 testactivity <- read.table("./UCI HAR Dataset/test/y_test.txt")
-#merging activity ids
+#merging aVieewctivity ids
 mergedactivity <- rbind(trainactivity, testactivity)
 
 #reading subject ids
