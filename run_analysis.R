@@ -1,9 +1,3 @@
-fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-download.file(fileUrl,destfile="./Dataset.zip")
-
-# unzip data to root directory
-unzip(zipfile="./Dataset.zip",exdir="./")
-
 #reading both datasets
 traindata <- read.table("./UCI HAR Dataset/train/X_train.txt") 
 testdata <- read.table("./UCI HAR Dataset/test/X_test.txt")
@@ -47,4 +41,5 @@ names(mergeddatasets)[1:2] <- c("SubjectId", "Activity")
 # creating tidy data set from mergeddatasets
 tidydata <- group_by(mergeddatasets,SubjectId, Activity )
 tidydata <- summarise_each(tidydata,funs(mean))
+
 
