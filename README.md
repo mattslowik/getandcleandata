@@ -18,58 +18,57 @@ Script assumes that dataset was unziped to R working directory.
 For purpose of grouping and summarizing we are loading dplyr package
 
 ```
-#loading dplyr package
+
 library(dplyr)
 ```
 
 Both dataset are being read by read.table into memory and merged by rbind function.
 
-```
-#reading both datasets
+
 traindata <- read.table("./UCI HAR Dataset/train/X_train.txt") 
 testdata <- read.table("./UCI HAR Dataset/test/X_test.txt")
-#merging sets
+
 mergeddata <- rbind(traindata, testdata)
 ```
 
 Column names and activity labels are also being read.
 
 ```
-#reading column names for datasets from features.txt
+
 columnnames <- read.table("./UCI HAR Dataset/features.txt")
 
-#reading activity labels
+
 activitylabels <- read.table("./UCI HAR Dataset/activity_labels.txt")
 ```
 
 Similar procedure is being applied to dataset containing subjects ID. We merge both datasets with rbind function
 
 ```
-#reading subject ids
+
 trainsubject <- read.table("./UCI HAR Dataset/train/subject_train.txt")
 testsubject <- read.table("./UCI HAR Dataset/test/subject_test.txt")
-#merging subject ids 
+
 mergedsubject <- rbind(trainsubject,testsubject)
 ```
 
 adding labels to dataset and extracting only means and standard deviation of each measurements
 
 ```
-#addding labels to data set
 names(mergeddata) <- columnnames$V2
 
 #selecting only the variables which contain mean and standart deviation
+```
 mergeddata <- mergeddata[ grepl("std|mean", names(mergeddata), ignore.case = TRUE)]
 ```
 
 replacing activity ID with coresponding Lables and merging all dataset together
 
 ```
-#replacing activity ids with activity labels
-mergedactivity <- merge(mergedactivity, activitylabels, by.x = "V1", by.y = "V1")
-mergedactivity <- mergedactivity[2]
+for (i in activitylabels$V1){ mergedactivity[mergedactivity$V1 == i,] <- as.character(activitylabels[i,2]) }
+```
 
 # combining all sets into one
+```
 mergeddatasets <- cbind(mergedsubject,mergedactivity, mergeddata)
 ```
 

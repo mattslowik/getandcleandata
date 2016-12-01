@@ -31,8 +31,7 @@ names(mergeddata) <- columnnames$V2
 mergeddata <- mergeddata[ grepl("std|mean", names(mergeddata), ignore.case = TRUE)]
 
 #replacing activity ids with activity labels
-mergedactivity <- merge(mergedactivity, activitylabels, by.x = "V1", by.y = "V1")
-mergedactivity <- mergedactivity[2]
+for (i in activitylabels$V1){ mergedactivity[mergedactivity$V1 == i,] <- as.character(activitylabels[i,2]) }
 
 # combining all sets into one
 mergeddatasets <- cbind(mergedsubject,mergedactivity, mergeddata)
@@ -41,7 +40,6 @@ mergeddatasets <- cbind(mergedsubject,mergedactivity, mergeddata)
 names(mergeddatasets)[1:2] <- c("SubjectId", "Activity")
 
 # creating tidy data set from mergeddatasets
-tidydata <- group_by(mergeddatasets,SubjectId, Activity )
+tidydata <- group_by(mergeddatasets,SubjectId, Activity)
 tidydata <- summarise_each(tidydata,funs(mean))
-
 
